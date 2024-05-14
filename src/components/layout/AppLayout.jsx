@@ -1,23 +1,21 @@
-import React, { useCallback, useState, useEffect, useRef } from "react";
-import Header from "./Header";
-import Title from "../shared/Title";
 import { Drawer, Grid, Skeleton } from "@mui/material";
-import Chatlist from "../specific/Chatlist";
-import { sampleChats } from "../../constants/sampleData";
+import React, { useCallback, useEffect, useRef, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
-import Profile from "../specific/Profile";
-import { richblue, richblack, puregreys } from "../../constants/color";
+import { richblack } from "../../constants/color";
 import { useMyChatsQuery } from "../../redux/api/api";
-import { useSelector } from "react-redux";
-import { useDispatch } from "react-redux";
 import { setIsDeleteMenu, setIsMobile, setSelectedDeleteChat } from "../../redux/reducers/misc";
+import Title from "../shared/Title";
+import Chatlist from "../specific/Chatlist";
+import Profile from "../specific/Profile";
+import Header from "./Header";
 
-import {useErrors, useSocketEvents} from "../../hooks/hook"
-import { getSocket } from "../../socket";
-import { NEW_MESSAGE_ALERT, NEW_REQUEST } from "../../../../server/constants/events";
-import { incrementNotificationCount, setNewMessagesAlert } from "../../redux/reducers/chat";
+import { } from "../../../../server/constants/events";
+import { NEW_MESSAGE_ALERT, NEW_REQUEST, ONLINE_USERS, REFETCH_CHATS } from "../../constants/events";
+import { useErrors, useSocketEvents } from "../../hooks/hook";
 import { getOrSaveFromStorage } from "../../lib/features";
-import { ONLINE_USERS, REFETCH_CHATS } from "../../constants/events";
+import { incrementNotificationCount, setNewMessagesAlert } from "../../redux/reducers/chat";
+import { getSocket } from "../../socket";
 import DeleteChatMenu from "../dialogs/DeleteChatMenu";
 
 const AppLayout = () => (WrappedComponent) => {
