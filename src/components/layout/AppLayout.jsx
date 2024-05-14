@@ -9,8 +9,6 @@ import Title from "../shared/Title";
 import Chatlist from "../specific/Chatlist";
 import Profile from "../specific/Profile";
 import Header from "./Header";
-
-import { } from "../../../../server/constants/events";
 import { NEW_MESSAGE_ALERT, NEW_REQUEST, ONLINE_USERS, REFETCH_CHATS } from "../../constants/events";
 import { useErrors, useSocketEvents } from "../../hooks/hook";
 import { getOrSaveFromStorage } from "../../lib/features";
