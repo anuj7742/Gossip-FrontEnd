@@ -11,7 +11,7 @@ const api = createApi({
     endpoints : (builder) => ({
         myChats: builder.query({
             query: () => ({
-              url: "chat/my",
+              url: "chat/my/chats",
               credentials: "include",
             }),
             providesTags: ["Chat"],
