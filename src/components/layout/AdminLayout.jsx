@@ -63,7 +63,7 @@ const Sidebar = ({ w }) => {
         dispatch(adminLogout())
     }
     return (
-        <Stack width={w} direction={"column"} p={"3rem"} spacing={"3rem"}>
+        <Stack width={w} direction={"column"} p={"1.5rem"} spacing={"3rem"}>
             <Typography variant="h5" textTransform={"uppercase"}>
                 Gossip
             </Typography>
@@ -75,6 +75,7 @@ const Sidebar = ({ w }) => {
                             sx={
                                 location.pathname === tab.path && {
                                     bgcolor: richblack[800],
+                                    width: "11rem",
                                     color: richblack[50],
                                     ":hover": { color: richblack[200] },
                                 }
@@ -122,7 +123,9 @@ const AdminLayout = ({ children }) => {
                     display: { xs: "block", md: "none" },
                     position: "fixed",
                     right: "1rem",
-                    top: "1rem"
+                    top: "1rem",
+                    backgroundColor: richblack[50],
+                    borderRadius: "3rem"
                 }}
             >
                 <IconButton onClick={handleMobile}>

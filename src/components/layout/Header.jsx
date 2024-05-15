@@ -1,5 +1,5 @@
 import React, { Suspense, lazy, useState } from "react";
-import { Box, AppBar, Toolbar, Typography, IconButton, Tooltip, Backdrop, Container, Badge } from "@mui/material";
+import { Box, AppBar, Toolbar, Typography, IconButton, Tooltip, Backdrop, Container, Badge, Drawer, Stack, Paper, Dialog, Button, SwipeableDrawer } from "@mui/material";
 import axios from "axios";
 import { server } from "../../constants/config";
 
@@ -9,7 +9,10 @@ import {
     Menu as MenuIcon,
     Search as SearchIcon,
     Logout as LogoutIcon,
-    Notifications as NotificationsIcon
+    Notifications as NotificationsIcon,
+    ArrowBackIos as ArrowBackIosIcon,
+    ArrowForwardIos as ArrowForwardIosIcon,
+    Cancel as CancelIcon
 } from "@mui/icons-material"
 import { caribbeangreen, orange, richblack, richblue } from "../../constants/color";
 import { useNavigate } from "react-router-dom";
@@ -32,14 +35,23 @@ const Header = () => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
 
-    const {isSearch, isNotification, isNewGroup } = useSelector((state)=> state.misc)
-    const { notificationCount } = useSelector((state)=> state.chat)
+    const { isSearch, isNotification, isNewGroup } = useSelector((state) => state.misc)
+    const { notificationCount } = useSelector((state) => state.chat)
 
-    
+    const [isSidebarOpen, setIsSidebarOpen] = useState(false)
+    const [isLogout, setIsLogout] = useState(false)
+
+    const menuOpenHandler = () => {
+        setIsSidebarOpen(true);
+    }
+
+    const menuCloseHandler = () => {
+        setIsSidebarOpen(false);
+    }
 
 
     const handleClick = () => {
-       dispatch( setIsMobile(true));
+        dispatch(setIsMobile(true));
     }
 
     const openSearch = () => {
@@ -52,25 +64,30 @@ const Header = () => {
     const navigateToGroup = () => {
         navigate("/groups");
     }
-    const logoutHandler = async() => {
+
+    const logoutClickHandler = () => {
+        setIsLogout(true);
+    }
+
+
+    const logoutHandler = async () => {
         try {
-            console.log("in logout handler try block")
-            const {data} = await axios.get(`${server}/api/v1/user/logout`,{
+            const { data } = await axios.get(`${server}/api/v1/user/logout`, {
                 withCredentials: true
-            }); 
-            console.log(data);
-            
+            });
+
             dispatch(userNotExists())
             toast.success(data.message)
         } catch (error) {
             toast.error(error?.response?.data?.message || "Something went wrong")
         }
-       
+
     }
     const openNotification = () => {
         dispatch(setIsNotification(true));
         dispatch(resetNotificationCount())
     }
+
 
 
     return (
@@ -86,9 +103,9 @@ const Header = () => {
                                 display: { xs: "none", sm: "block" },
                             }}
                         >
-                          Gossip
+                            Gossip
                         </Typography>
-                       
+
 
                         <Box
                             sx={{
@@ -99,12 +116,75 @@ const Header = () => {
                                 <MenuIcon />
                             </IconButton>
                         </Box>
+
                         <Box
                             sx={{
                                 flexGrow: 1
                             }}
                         />
-                        <Box>
+
+                        <Stack sx={{
+                            display: { xs: "none", sm: "block" }
+                        }}>
+
+                            <Box>
+                                <IconBtn
+                                    title={"Search"}
+                                    icon={<SearchIcon />}
+                                    onClick={openSearch}
+                                />
+                                <IconBtn
+                                    title={"New Group"}
+                                    icon={<AddIcon />}
+                                    onClick={openNewGroup}
+                                />
+                                <IconBtn
+                                    title={"Manage Group"}
+                                    icon={<GroupIcon />}
+                                    onClick={navigateToGroup}
+                                />
+                                <IconBtn
+                                    title={"Notifications"}
+                                    icon={<NotificationsIcon />}
+                                    onClick={openNotification}
+                                    value={notificationCount}
+                                />
+
+                                <IconBtn
+                                    title={"Logout"}
+                                    icon={<LogoutIcon />}
+                                    onClick={logoutClickHandler}
+                                />
+
+                            </Box>
+                        </Stack>
+
+                        <Box
+                            sx={{
+                                display: { xs: "block", sm: "none" },
+                            }}
+                        >
+                            <IconButton color="inherit" onClick={menuOpenHandler}>
+                                <ArrowBackIosIcon />
+                            </IconButton>
+                        </Box>
+                    </Toolbar>
+
+                    <SwipeableDrawer open={isSidebarOpen} onClose={menuCloseHandler} anchor="right" >
+
+                        <Box sx={{
+                            display: "flex",
+                            flexDirection: "column",
+                            justifyContent: "space-between"
+                        }}>
+
+                            <Box sx={{
+                                height:"10px"
+                            }}>
+
+                            </Box>
+
+
                             <IconBtn
                                 title={"Search"}
                                 icon={<SearchIcon />}
@@ -130,11 +210,10 @@ const Header = () => {
                             <IconBtn
                                 title={"Logout"}
                                 icon={<LogoutIcon />}
-                                onClick={logoutHandler}
+                                onClick={logoutClickHandler}
                             />
-
                         </Box>
-                    </Toolbar>
+                    </SwipeableDrawer>
 
                 </AppBar>
             </Box>
@@ -154,6 +233,39 @@ const Header = () => {
                     <NewGroupDialog />
                 </Suspense>
             }
+
+            {
+                isLogout &&
+                <Dialog open onClose={() => setIsLogout(false)}>
+                    <Stack direction={"column"} alignItems={"center"}
+                        p={{ xs: "1rem", sm: "2rem" }} width={"25rem"} spacing={"2rem"}
+                    >
+                        <Typography textAlign={"center"} variant="h5">
+                            Are you sure you want to log out?
+                        </Typography>
+
+                        <Stack direction={"row"} justifyContent={"space-evenly"}
+                            p={{ xs: "1rem", sm: "2rem" }} width={"25rem"} spacing={"2rem"}
+                        >
+                            <Button variant="contained" color="error" size="large" onClick={() => setIsLogout(false)}>
+                                <Stack direction={"row"} gap={"0.5rem"}>
+                                    No
+                                    <CancelIcon />
+                                </Stack>
+
+                            </Button>
+                            <Button variant="contained" size="large" onClick={logoutHandler}>
+                                <Stack direction={"row"} gap={"0.5rem"}>
+                                    Yes
+                                    <LogoutIcon />
+                                </Stack>
+
+
+                            </Button>
+                        </Stack>
+                    </Stack>
+                </Dialog>
+            }
         </>
     )
 }
@@ -162,12 +274,12 @@ const IconBtn = ({ title, icon, onClick, value }) => {
     return (
         <Tooltip title={title}>
             <IconButton color="inherit" size="large" onClick={onClick}>
-                {value ?( 
-                <Badge badgeContent= {value} color="error">
-                    {icon} 
-                </Badge>) : (
-                 icon )
-                 }
+                {value ? (
+                    <Badge badgeContent={value} color="error">
+                        {icon}
+                    </Badge>) : (
+                    icon)
+                }
             </IconButton>
         </Tooltip>
     )
