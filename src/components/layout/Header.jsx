@@ -175,7 +175,8 @@ const Header = () => {
                         <Box sx={{
                             display: "flex",
                             flexDirection: "column",
-                            justifyContent: "space-between"
+                            justifyContent: "space-between",
+                            margin:"10px"
                         }}>
 
                             <Box sx={{
@@ -238,23 +239,32 @@ const Header = () => {
                 isLogout &&
                 <Dialog open onClose={() => setIsLogout(false)}>
                     <Stack direction={"column"} alignItems={"center"}
-                        p={{ xs: "1rem", sm: "2rem" }} width={"25rem"} spacing={"2rem"}
+                        p={{ xs: "1rem", sm: "2rem" }} width={"90%"} spacing={"2rem"}
                     >
                         <Typography textAlign={"center"} variant="h5">
                             Are you sure you want to log out?
                         </Typography>
 
-                        <Stack direction={"row"} justifyContent={"space-evenly"}
-                            p={{ xs: "1rem", sm: "2rem" }} width={"25rem"} spacing={"2rem"}
+                        <Stack direction={{xs:"column", sm:"row"}} justifyContent={"space-evenly"} alignItems={"center"}
+                            p={{ xs: "1rem", sm: "2rem" }} width={{xs:"60%",sm:"25rem"}} gap={"2rem"} 
                         >
-                            <Button variant="contained" color="error" size="large" onClick={() => setIsLogout(false)}>
+                            <Button variant="contained" color="error" size="large" onClick={() => setIsLogout(false)}
+                                sx={{
+                                    // marginLeft:{xs:"10px", sm:"0px"},
+                                    minWidth:{xs:"90%", sm:"40%"},
+                                }}
+                            >
                                 <Stack direction={"row"} gap={"0.5rem"}>
                                     No
                                     <CancelIcon />
                                 </Stack>
 
                             </Button>
-                            <Button variant="contained" size="large" onClick={logoutHandler}>
+                            <Button variant="contained" size="large" color="success" onClick={logoutHandler}
+                                sx={{
+                                        minWidth:{xs:"90%", sm:"40%"},
+                                }}
+                            >
                                 <Stack direction={"row"} gap={"0.5rem"}>
                                     Yes
                                     <LogoutIcon />
