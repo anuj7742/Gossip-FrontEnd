@@ -33,7 +33,7 @@ const Notifications = () => {
 
     return (
         <Dialog open={isNotification} onClose={closeHandler}>
-            <Stack p={{ xs: "1rem", sm: "2rem" }} Width={"25rem"}>
+            <Stack p={{ xs: "1rem", sm: "2rem" }} width={"25rem"}>
                 <DialogTitle>Notifications</DialogTitle>
                 {isLoading ? (<Skeleton />)
                     : (<>
