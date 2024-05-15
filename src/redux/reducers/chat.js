@@ -1,9 +1,12 @@
 import { createSlice } from "@reduxjs/toolkit"
 import { getOrSaveFromStorage } from "../../lib/features";
-import { NEW_MESSAGE_ALERT } from "../../constants/events";
+import { NEW_MESSAGE_ALERT, NOTIFICATIONS_COUNT, } from "../../constants/events";
 
 const initialState = {
-   notificationCount : 0,
+   notificationCount : getOrSaveFromStorage({
+    key: NOTIFICATIONS_COUNT,
+    get:"true"
+   }) || 0,
    newMessagesAlert : 
    getOrSaveFromStorage(
     {
@@ -24,9 +27,11 @@ const chatSlice = createSlice({
     reducers: {
         incrementNotificationCount : (state)=> {
             state.notificationCount += 1;
+            getOrSaveFromStorage({key:NOTIFICATIONS_COUNT, value: state.notificationCount})
         },
         resetNotificationCount : (state)=> {
             state.notificationCount = 0;
+            getOrSaveFromStorage({key:NOTIFICATIONS_COUNT, value: 0})
         },
         setNewMessagesAlert : (state, action) => {
             const chatId = action.payload.chatId
