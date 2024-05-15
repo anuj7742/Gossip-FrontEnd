@@ -1,10 +1,9 @@
-import React, { memo } from "react";
-import { caribbeangreen, puregreys, richblack, richblue } from "../../constants/color";
 import { Box, Typography } from "@mui/material";
-import moment from "moment"
+import moment from "moment";
+import React, { memo } from "react";
+import { caribbeangreen, puregreys, richblack } from "../../constants/color";
 import { fileFormat } from "../../lib/features";
 import RenderAttachment from "./RenderAttachment";
-import {motion } from "framer-motion"
 
 const MessageComponent = ({ message, user }) => {
 
@@ -15,9 +14,8 @@ const MessageComponent = ({ message, user }) => {
     const timeAgo = moment(createdAt).fromNow();
 
     return (
-        <motion.div
-            initial={{opacity: 0, x:"-100%"}}
-            animate={{opacity:1, x:0}}
+        <div
+            
             style={{
                 alignSelf: sameSender ? "flex-end" : "flex-start",
                 backgroundColor: sameSender ? caribbeangreen[300] : puregreys[50],
@@ -57,7 +55,7 @@ const MessageComponent = ({ message, user }) => {
             <Typography variant="caption" color={"text.secondary"}>
                 {timeAgo}
             </Typography>
-        </motion.div>
+        </div>
     )
 }
 

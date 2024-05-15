@@ -14,7 +14,7 @@ import { useAsyncMutation } from "../../hooks/hook"
 const Search = () => {
 
     const {user }= useSelector((state)=> state.auth)
-    console.log(user)
+    // console.log(user)
     const search = useInputValidation("");
     const dispatch = useDispatch();
     const { isSearch } = useSelector((state) => state.misc);

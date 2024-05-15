@@ -22,9 +22,7 @@ const ChatItem = ({
                 padding: "0"
             }}
             to={`/chat/${_id}`} onContextMenu={(e) => handleDeleteChat(e, _id, groupChat)}>
-            <motion.div
-                initial={{opacity: 0, y:"-100%"}}
-                animate={{opacity:1, y:0}}
+            <div
                 transition={{delay: index * 0.1}}
                 style={{
                     display: "flex",
@@ -65,7 +63,7 @@ const ChatItem = ({
                     )
                 }
 
-            </motion.div>
+            </div>
         </Link>
     )
 }

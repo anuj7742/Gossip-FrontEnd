@@ -18,7 +18,7 @@ const AddMemberDialog = ({ chatId }) => {
 
     const { isLoading, data, isError, error } = useAvailableFriendsQuery(chatId)
 
-    console.log(data)
+    // console.log(data)
 
     const [addMembers, isLoadingAddMembers] = useAsyncMutation(
         useAddGroupMembersMutation

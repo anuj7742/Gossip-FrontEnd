@@ -1,6 +1,6 @@
-import { createSlice } from "@reduxjs/toolkit"
-import { adminLogin, getAdmin, adminLogout } from "../thunks/admin";
+import { createSlice } from "@reduxjs/toolkit";
 import { toast } from "react-hot-toast";
+import { adminLogin, adminLogout, getAdmin } from "../thunks/admin";
 
 const initialState = {
     user: null,

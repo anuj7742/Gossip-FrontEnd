@@ -1,4 +1,4 @@
-import { Avatar, Button, Dialog, DialogTitle, ListItem, Skeleton, Stack, Typography } from "@mui/material";
+import { Avatar, Box, Button, Dialog, DialogTitle, Divider, ListItem, Skeleton, Stack, Typography } from "@mui/material";
 import React, { memo } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useAsyncMutation, useErrors } from "../../hooks/hook";
@@ -33,7 +33,7 @@ const Notifications = () => {
 
     return (
         <Dialog open={isNotification} onClose={closeHandler}>
-            <Stack p={{ xs: "1rem", sm: "2rem" }} width={"25rem"}>
+            <Stack p={{ xs: "1rem", sm: "2rem" }} width={"30rem"}>
                 <DialogTitle>Notifications</DialogTitle>
                 {isLoading ? (<Skeleton />)
                     : (<>
@@ -63,27 +63,38 @@ const NotificationItem = memo(({ sender, _id, handler }) => {
             <Stack
                 direction={{
                     xs: "column",
-                    sm: "row",
+                    sm: "coulumn",
                 }}
                 alignItems={"center"}
                 spacing={"1rem"}
                 width={"100%"}
             >
-                <Avatar src={avatar} />
-                <Typography
-                    variant="body1"
-                    sx={{
-                        flexGlow: 1,
-                        display: "-webkit-box",
-                        WebkitLineClamp: 1,
-                        WebkitBoxOrient: "vertical",
-                        overflow: "hidden",
-                        textOverflow: "ellipsis",
-                        width: "100%"
+                <Stack
+                    direction={{
+                        xs: "row",
+                        sm: "row",
                     }}
+                    alignItems={"center"}
+                    spacing={"1rem"}
+                    width={"100%"}
                 >
-                    {`${name} sent you a friend request.`}
-                </Typography>
+                    <Avatar src={avatar} />
+                    <Typography
+                        variant="body1"
+                        sx={{
+                            flexGlow: 1,
+                            display: "-webkit-box",
+                            WebkitLineClamp: 1,
+                            WebkitBoxOrient: "vertical",
+                            overflow: "hidden",
+                            textOverflow: "ellipsis",
+                            width: "100%"
+                        }}
+                    >
+                        {`${name} sent you a friend request.`}
+                    </Typography>
+                </Stack>
+
 
                 <Stack
                     direction={"row"}
@@ -91,7 +102,7 @@ const NotificationItem = memo(({ sender, _id, handler }) => {
                     <Button onClick={() => handler({ _id, accept: true })}>Accept</Button>
                     <Button color="error" onClick={() => handler({ _id, accept: false })}>Reject</Button>
                 </Stack>
-
+                <Divider  variant="inset"  flexItem />
             </Stack>
         </ListItem>
     )

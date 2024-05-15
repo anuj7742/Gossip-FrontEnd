@@ -13,6 +13,7 @@ const initialState = {
         chatId: "",
         groupChat: false,
     },
+    isReloadPage : false,
 };
 
 const miscSlice = createSlice({
@@ -46,6 +47,9 @@ const miscSlice = createSlice({
         setSelectedDeleteChat: (state, action) => {
             state.selectedDeleteChat = action.payload;
         },
+        setIsReloadPage : (state, action) => {
+            state.isReloadPage = action.payload;
+        }
     },
 
 
@@ -64,4 +68,5 @@ export const {
   setIsDeleteMenu,
   setUploadingLoader,
   setSelectedDeleteChat,
+  setIsReloadPage,
 } = miscSlice.actions;

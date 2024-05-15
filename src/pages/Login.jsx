@@ -10,6 +10,8 @@ import { server } from '../constants/config';
 import { userExists } from "../redux/reducers/auth";
 
 import { puregreys, richblack, richblue } from "../constants/color"
+import { useMyChatsQuery } from '../redux/api/api';
+import { setIsReloadPage } from '../redux/reducers/misc';
 
 const Login = () => {
 
@@ -17,8 +19,6 @@ const Login = () => {
     const { user } = useSelector((state) => state.auth);
     const [isLogin, setIsLogin] = useState(true);
     const [isLoading, setIsLoading] = useState(false)
-
-
 
     const name = useInputValidation("");
     const bio = useInputValidation("");
@@ -61,8 +61,11 @@ const Login = () => {
             // console.log("user",data.user)
 
             dispatch(userExists(data.user));
+            dispatch(setIsReloadPage(true))
             // console.log("user",user);
             toast.success(data.message, { id: toastId });
+
+
 
         } catch (error) {
             toast.error(error?.response?.data?.message || "Something went wrong", { id: toastId })

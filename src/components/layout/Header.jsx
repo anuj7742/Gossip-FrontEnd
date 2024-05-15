@@ -1,30 +1,27 @@
-import React, { Suspense, lazy, useState } from "react";
-import { Box, AppBar, Toolbar, Typography, IconButton, Tooltip, Backdrop, Container, Badge, Drawer, Stack, Paper, Dialog, Button, SwipeableDrawer } from "@mui/material";
+import { AppBar, Backdrop, Badge, Box, Button, Dialog, IconButton, Stack, SwipeableDrawer, Toolbar, Tooltip, Typography } from "@mui/material";
 import axios from "axios";
+import React, { Suspense, lazy, useState } from "react";
 import { server } from "../../constants/config";
 
 import {
-    Group as GroupIcon,
     Add as AddIcon,
-    Menu as MenuIcon,
-    Search as SearchIcon,
-    Logout as LogoutIcon,
-    Notifications as NotificationsIcon,
     ArrowBackIos as ArrowBackIosIcon,
-    ArrowForwardIos as ArrowForwardIosIcon,
-    Cancel as CancelIcon
-} from "@mui/icons-material"
-import { caribbeangreen, orange, richblack, richblue } from "../../constants/color";
+    Cancel as CancelIcon,
+    Group as GroupIcon,
+    Logout as LogoutIcon,
+    Menu as MenuIcon,
+    Notifications as NotificationsIcon,
+    Search as SearchIcon
+} from "@mui/icons-material";
 import { useNavigate } from "react-router-dom";
+import { caribbeangreen } from "../../constants/color";
 
-import Gossip from "../../assets/Gossip.png"
+import logo from "./Icon.png"
 import { toast } from "react-hot-toast";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { userNotExists } from "../../redux/reducers/auth";
-import { setIsMobile, setIsNotification, setIsSearch, setIsNewGroup } from "../../redux/reducers/misc";
-import { useSelector } from "react-redux";
 import { resetNotificationCount } from "../../redux/reducers/chat";
-import { getOrSaveFromStorage } from "../../lib/features";
+import { setIsMobile, setIsNewGroup, setIsNotification, setIsReloadPage, setIsSearch } from "../../redux/reducers/misc";
 
 const SearchDialog = lazy(() => import("../specific/Search"))
 const NotificationsDialog = lazy(() => import("../specific/Notifications"))
@@ -77,7 +74,8 @@ const Header = () => {
                 withCredentials: true
             });
 
-            dispatch(userNotExists())
+            dispatch(userNotExists());
+            dispatch(setIsReloadPage((false)))
             toast.success(data.message)
         } catch (error) {
             toast.error(error?.response?.data?.message || "Something went wrong")
@@ -98,14 +96,25 @@ const Header = () => {
                     bgcolor: caribbeangreen[600]
                 }}>
                     <Toolbar>
-                        <Typography
-                            variant="h6"
-                            sx={{
-                                display: { xs: "none", sm: "block" },
-                            }}
-                        >
-                            Gossip
-                        </Typography>
+                        <Tooltip>
+                            <Box
+                                onClick={() => navigate("/")}
+
+                                sx={{
+                                    display: { xs: "none", sm: "block" },
+                                    marginTop: "25px",
+                                    position: "absolute",
+                                    cursor: "pointer",
+                                    transition: 'transform 0.3s ease',
+                                    '&:hover': {
+                                        transform: 'scale(1.1)',
+                                    },
+                                }}
+                            >
+                                <img src={logo} alt="Logo" width={160} height={100} loading="lazy" position="relative" />
+                            </Box>
+                        </Tooltip>
+
 
 
                         <Box
@@ -171,17 +180,22 @@ const Header = () => {
                         </Box>
                     </Toolbar>
 
-                    <SwipeableDrawer open={isSidebarOpen} onClose={menuCloseHandler} anchor="right" >
+                    <SwipeableDrawer 
+                        open={isSidebarOpen} 
+                        onClose={menuCloseHandler} 
+                        anchor="right" 
+                        onOpen={() => {}}
+                    >
 
                         <Box sx={{
                             display: "flex",
                             flexDirection: "column",
                             justifyContent: "space-between",
-                            margin:"10px"
+                            margin: "10px"
                         }}>
 
                             <Box sx={{
-                                height:"10px"
+                                height: "10px"
                             }}>
 
                             </Box>
@@ -246,13 +260,13 @@ const Header = () => {
                             Are you sure you want to log out?
                         </Typography>
 
-                        <Stack direction={{xs:"column", sm:"row"}} justifyContent={"space-evenly"} alignItems={"center"}
-                            p={{ xs: "1rem", sm: "2rem" }} width={{xs:"60%",sm:"25rem"}} gap={"2rem"} 
+                        <Stack direction={{ xs: "column", sm: "row" }} justifyContent={"space-evenly"} alignItems={"center"}
+                            p={{ xs: "1rem", sm: "2rem" }} width={{ xs: "60%", sm: "25rem" }} gap={"2rem"}
                         >
                             <Button variant="contained" color="error" size="large" onClick={() => setIsLogout(false)}
                                 sx={{
                                     // marginLeft:{xs:"10px", sm:"0px"},
-                                    minWidth:{xs:"90%", sm:"40%"},
+                                    minWidth: { xs: "90%", sm: "40%" },
                                 }}
                             >
                                 <Stack direction={"row"} gap={"0.5rem"}>
@@ -263,7 +277,7 @@ const Header = () => {
                             </Button>
                             <Button variant="contained" size="large" color="success" onClick={logoutHandler}
                                 sx={{
-                                        minWidth:{xs:"90%", sm:"40%"},
+                                    minWidth: { xs: "90%", sm: "40%" },
                                 }}
                             >
                                 <Stack direction={"row"} gap={"0.5rem"}>
