@@ -20,6 +20,9 @@ const Chatlist = ({
     return (
         <Stack width={w} direction={"column"}
             overflow={"auto"} height={"100%"}
+            sx={{
+                backgroundColor: richblack[100]
+            }}
         >
             {
                 chats?.map((data, index) => {

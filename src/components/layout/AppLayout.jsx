@@ -104,7 +104,7 @@ const AppLayout = () => (WrappedComponent) => {
                 <DeleteChatMenu dispatch={dispatch} deleteMenuAnchor={deleteMenuAnchor.current} />
 
                 {
-                    isLoading ?
+                    isLoading && isMobile ?
                         (<Skeleton />) : (
                             <Drawer open={isMobile} onClose={handleMobileClose}>
                                 <Chatlist chats={data?.chats} chatId={chatId}
@@ -133,7 +133,7 @@ const AppLayout = () => (WrappedComponent) => {
                         md={3}
                         sx={{
                             display: { xs: "none", sm: "block" },
-                            backgroundColor: "#B4D9CA"
+                            backgroundColor: richblack[100]
                         }}
                         height={"100%"}
                     >

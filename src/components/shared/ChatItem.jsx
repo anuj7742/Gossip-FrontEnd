@@ -4,6 +4,8 @@ import { Link } from "../styles/StyledComponents";
 import AvatarCard from "./AvatarCard";
 import { richblack, richblue } from "../../constants/color";
 import { motion } from "framer-motion"
+import { useDispatch } from "react-redux";
+import { setIsMobile } from "../../redux/reducers/misc";
 
 const ChatItem = ({
     avatar = [],
@@ -16,6 +18,9 @@ const ChatItem = ({
     index = 0,
     handleDeleteChat,
 }) => {
+
+    const dispatch = useDispatch();
+
     return (
         <Link
             sx={{
@@ -34,7 +39,9 @@ const ChatItem = ({
                     backgroundColor: sameSender ? richblack[400] : "unset",
                     color: sameSender ? richblack[5] : "unset",
                     position: "relative"
-                }}>
+                }}
+                
+                >
                 <AvatarCard avatar={avatar} />
 
                 <Stack>
@@ -55,8 +62,8 @@ const ChatItem = ({
                                 borderRadius: "50%",
                                 backgroundColor: "green",
                                 position: "absolute",
-                                top: "50%",
-                                right: "1rem",
+                                top: "25%",
+                                left: "2.7rem",
                                 transform: "translateY(-50%)",
                             }}
 

@@ -6,6 +6,7 @@ import { server } from "../../constants/config";
 import {
     Add as AddIcon,
     ArrowBackIos as ArrowBackIosIcon,
+    ArrowForwardIos as ArrowForwardIosIcon,
     Cancel as CancelIcon,
     Group as GroupIcon,
     Logout as LogoutIcon,
@@ -14,7 +15,7 @@ import {
     Search as SearchIcon
 } from "@mui/icons-material";
 import { useNavigate } from "react-router-dom";
-import { caribbeangreen } from "../../constants/color";
+import { caribbeangreen, richblack } from "../../constants/color";
 
 import logo from "./Icon.png"
 import { toast } from "react-hot-toast";
@@ -93,7 +94,7 @@ const Header = () => {
         <>
             <Box sx={{ flexGrow: 1 }} height={"4rem"}>
                 <AppBar position="static" sx={{
-                    bgcolor: caribbeangreen[600]
+                    bgcolor: richblack[500]
                 }}>
                     <Toolbar>
                         <Tooltip>
@@ -123,7 +124,7 @@ const Header = () => {
                             }}
                         >
                             <IconButton color="inherit" onClick={handleClick}>
-                                <MenuIcon />
+                                <ArrowForwardIosIcon />
                             </IconButton>
                         </Box>
 
@@ -175,7 +176,7 @@ const Header = () => {
                             }}
                         >
                             <IconButton color="inherit" onClick={menuOpenHandler}>
-                                <ArrowBackIosIcon />
+                                <MenuIcon />
                             </IconButton>
                         </Box>
                     </Toolbar>
