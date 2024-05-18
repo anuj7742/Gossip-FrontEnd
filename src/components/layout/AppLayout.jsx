@@ -41,13 +41,13 @@ const AppLayout = () => (WrappedComponent) => {
         // console.log(data);
         useErrors([{ isError, error }])
 
-        useState(()=>{
-            if(isReloadPage) {
+        useState(() => {
+            if (isReloadPage) {
                 window.location.reload();
                 dispatch(setIsReloadPage(false));
-            } 
-        },[dispatch])
-              
+            }
+        }, [dispatch])
+
 
         useEffect(() => {
 
@@ -137,7 +137,20 @@ const AppLayout = () => (WrappedComponent) => {
                         }}
                         height={"100%"}
                     >
-                        {isLoading ? (<Skeleton />) :
+                        {isLoading ? (
+                            <>
+                            <Skeleton
+                                variant="rectangular"
+                                sx={{ height: '10%', width: '100%',  marginTop:"2%" }} // Ensure the Skeleton takes full height and width
+                            />
+                            
+                            <Skeleton
+                                variant="rectangular"
+                                sx={{ height: '10%', width: '100%', marginTop:"2%" }} // Ensure the Skeleton takes full height and width
+                            />
+                            </>
+                           
+                        ) :
                             (
                                 <Chatlist chats={data?.chats} chatId={chatId}
                                     handleDeleteChat={handleDeleteChat}
@@ -147,7 +160,7 @@ const AppLayout = () => (WrappedComponent) => {
                             )}
                     </Grid>
                     <Grid item xs={12} sm={8} md={5} lg={6} height={"100%"}>
-                        <WrappedComponent {...props} chatId={chatId} user={user} />
+                        <WrappedComponent {...props} chatId={chatId} user={user} onlineUsers={onlineUsers} />
                     </Grid>
 
                 </Grid>

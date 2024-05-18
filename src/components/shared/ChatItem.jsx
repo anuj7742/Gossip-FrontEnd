@@ -42,7 +42,7 @@ const ChatItem = ({
                 }}
                 
                 >
-                <AvatarCard avatar={avatar} />
+                <AvatarCard avatar={avatar}/>
 
                 <Stack>
                     <Typography>{name}</Typography>

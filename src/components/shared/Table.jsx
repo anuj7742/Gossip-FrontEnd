@@ -4,6 +4,9 @@ import {DataGrid} from "@mui/x-data-grid"
 import { richblack } from "../../constants/color";
 
 const Table = ({rows, columns, heading ,rowHeight =52}) => {
+
+    // console.log(rows)
+    // console.log(columns)
     return (
         <Container
             sx={{

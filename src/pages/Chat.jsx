@@ -1,6 +1,6 @@
 import { useInfiniteScrollTop } from "6pp";
-import { AttachFile as AttachFileIcon, Send as SendIcon } from "@mui/icons-material";
-import { IconButton, Skeleton, Stack } from "@mui/material";
+import { ArrowBackIos, AttachFile as AttachFileIcon, Group as GroupIcon, Send as SendIcon } from "@mui/icons-material";
+import { Avatar, Box, IconButton, Skeleton, Stack, Typography } from "@mui/material";
 import React, { Fragment, useCallback, useEffect, useRef, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
@@ -8,8 +8,8 @@ import FileMenu from "../components/dialogs/FileMenu";
 import AppLayout from "../components/layout/AppLayout";
 import { TypingLoader } from "../components/layout/Loaders";
 import MessageComponent from "../components/shared/MessageComponent";
-import { InputBox } from "../components/styles/StyledComponents";
-import { puregreys, richblack } from "../constants/color";
+import { InputBox, Link } from "../components/styles/StyledComponents";
+import { caribbeangreen, puregreys, richblack } from "../constants/color";
 import { ALERT, CHAT_JOINED, CHAT_LEAVED, NEW_MESSAGE, START_TYPING, STOP_TYPING } from "../constants/events";
 import { useErrors, useSocketEvents } from "../hooks/hook";
 import { useChatDetailsQuery, useGetMessagesQuery } from "../redux/api/api";
@@ -17,7 +17,7 @@ import { removeNewMessagesAlert } from "../redux/reducers/chat";
 import { setIsFileMenu } from "../redux/reducers/misc";
 import { getSocket } from "../socket";
 
-const Chat = ({ chatId, user }) => {
+const Chat = ({ chatId, user, onlineUsers }) => {
 
 
     const socket = getSocket();
@@ -58,6 +58,12 @@ const Chat = ({ chatId, user }) => {
     // console.log("oldMessagesChunk", oldMessages)
     // console.log(messages)
     const members = chatDetails?.data?.chat?.members
+
+    const otherMember = chatDetails?.data?.otherMember;
+    // console.log("Other member", otherMember)
+    // console.log("Chat details", chatDetails)
+
+    const isOnline = onlineUsers.includes(otherMember?._id);
 
     const messageOnChange = (e) => {
 
@@ -170,9 +176,7 @@ const Chat = ({ chatId, user }) => {
         <Fragment>
             <Stack
                 boxSizing={"border-box"}
-                padding={"1rem"}
                 spacing={"1rem"}
-                ref={containerRef}
                 bgcolor={"gray"}
                 height={"90%"}
                 sx={{
@@ -180,6 +184,89 @@ const Chat = ({ chatId, user }) => {
                     overflowY: "auto",
                 }}
             >
+                {
+                    otherMember !== undefined &&
+                    <Stack
+                        direction={"row"}
+                        style={{
+                            display: "flex",
+                            gap: "1rem",
+                            alignItems: "center",
+                            padding: "1rem",
+                            backgroundColor: richblack[700],
+                            color: richblack[5],
+                            position: "relative",
+                            maxHeight:"3.5rem"
+                        }}
+                    >
+
+                        <Link to={"/"} sx={{
+                           display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            width: '40px',  
+                            height: '40px',
+                            borderRadius:"50%"
+                        }}>
+                            <ArrowBackIos style={{ fontSize: "1.5rem", width: "1em", height: "1em", marginLeft:"10px"}} />
+                        </Link>
+
+                        <Avatar src={otherMember?.avatar}>
+                            <GroupIcon/>
+                        </Avatar>
+                        <Stack>
+                            <Typography>{otherMember ? otherMember?.name : chatDetails?.data?.chat?.name }</Typography>
+
+                        </Stack>
+
+                        {
+                            isOnline && (
+                                <Box
+                                    sx={{
+                                        width: "10px",
+                                        height: "10px",
+                                        borderRadius: "50%",
+                                        backgroundColor: "green",
+                                        position: "absolute",
+                                        top: "25%",
+                                        left: "6.2rem",
+                                        transform: "translateY(-50%)",
+                                    }}
+
+
+                                />
+                            )
+                        }
+                    </Stack>
+                }
+
+                {/* {
+                    otherMember === null &&
+                    <Stack
+                        direction={"row"}
+                        style={{
+                            display: "flex",
+                            gap: "1rem",
+                            alignItems: "center",
+                            padding: "1rem",
+                            backgroundColor: caribbeangreen[700],
+                            color: richblack[5],
+                            position: "relative"
+                        }}
+                    >
+                        <Link to={"/"}>
+                            <ArrowBackIos />
+                        </Link>
+
+                        <Avatar>
+                            <GroupIcon />
+                        </Avatar>
+                        <Stack>
+                            <Typography>{chatDetails?.data?.chat?.name}</Typography>
+
+                        </Stack>
+                    </Stack>
+                } */}
 
                 {
                     allMessages.map((i) => (

@@ -101,7 +101,6 @@ const ChatManagement = () => {
                 }
             })));
         }
-
     }, [data])
 
     return (

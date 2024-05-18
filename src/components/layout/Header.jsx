@@ -88,13 +88,14 @@ const Header = () => {
         dispatch(resetNotificationCount())
     }
 
-
+    const shouldRenderHeader = !location.pathname.includes("/chat/");
 
     return (
         <>
             <Box sx={{ flexGrow: 1 }} height={"4rem"}>
                 <AppBar position="static" sx={{
-                    bgcolor: richblack[500]
+                    bgcolor: richblack[500],
+                    height: "4rem"
                 }}>
                     <Toolbar>
                         <Tooltip>
