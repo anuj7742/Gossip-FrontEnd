@@ -207,7 +207,7 @@ const Chat = ({ chatId, user, onlineUsers }) => {
                             height: '40px',
                             borderRadius:"50%"
                         }}>
-                            <ArrowBackIos style={{ fontSize: "1.5rem", width: "1em", height: "1em", marginLeft:"10px"}} />
+                            <ArrowBackIos style={{ fontSize: "1.5rem", width: "1em", height: "1em", marginLeft:"10px", color: richblack[5]}} />
                         </Link>
 
                         <Avatar src={otherMember?.avatar}>
