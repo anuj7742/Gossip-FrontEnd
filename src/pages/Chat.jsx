@@ -185,7 +185,6 @@ const Chat = ({ chatId, user, onlineUsers }) => {
                 }}
             >
                 {
-                    otherMember !== undefined &&
                     <Stack
                         direction={"row"}
                         style={{
