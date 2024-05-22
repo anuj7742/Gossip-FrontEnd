@@ -22,7 +22,8 @@ const MessageComponent = ({ message, user }) => {
                 color: richblack[800],
                 borderRadius: "5px",
                 padding: "0.5rem",
-                width: "fit-content"
+                width: "fit-content",
+                margin:"5px",
             }}
 
         >

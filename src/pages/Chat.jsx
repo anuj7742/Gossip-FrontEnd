@@ -174,98 +174,75 @@ const Chat = ({ chatId, user, onlineUsers }) => {
         <Skeleton />
     ) : (
         <Fragment>
+
+            <Stack
+                direction={"row"}
+                style={{
+                    display: "flex",
+                    gap: "1rem",
+                    alignItems: "center",
+                    padding: "1rem",
+                    backgroundColor: richblack[700],
+                    color: richblack[5],
+                    position: "relative",
+                    maxHeight: "3.5rem",
+
+                }}
+            >
+
+                <Link to={"/"} sx={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    width: '40px',
+                    height: '40px',
+                    borderRadius: "50%"
+                }}>
+                    <ArrowBackIos style={{ fontSize: "1.5rem", width: "1em", height: "1em", marginLeft: "10px", color: richblack[5] }} />
+                </Link>
+
+                <Avatar src={otherMember?.avatar}>
+                    <GroupIcon />
+                </Avatar>
+                <Stack>
+                    <Typography>{otherMember ? otherMember?.name : chatDetails?.data?.chat?.name}</Typography>
+
+                </Stack>
+
+                {
+                    isOnline && (
+                        <Box
+                            sx={{
+                                width: "10px",
+                                height: "10px",
+                                borderRadius: "50%",
+                                backgroundColor: "green",
+                                position: "absolute",
+                                top: "25%",
+                                left: "6.2rem",
+                                transform: "translateY(-50%)",
+                            }}
+
+
+                        />
+                    )
+                }
+            </Stack>
+
+
+
             <Stack
                 boxSizing={"border-box"}
                 spacing={"1rem"}
                 bgcolor={"gray"}
-                height={"90%"}
+                height={{ xs: "90%", sm: "80%" }}
                 sx={{
                     overflowX: "hidden",
                     overflowY: "auto",
                 }}
             >
-                {
-                    <Stack
-                        direction={"row"}
-                        style={{
-                            display: "flex",
-                            gap: "1rem",
-                            alignItems: "center",
-                            padding: "1rem",
-                            backgroundColor: richblack[700],
-                            color: richblack[5],
-                            position: "relative",
-                            maxHeight:"3.5rem"
-                        }}
-                    >
-
-                        <Link to={"/"} sx={{
-                           display: 'flex',
-                            alignItems: 'center',
-                            justifyContent: 'center',
-                            width: '40px',  
-                            height: '40px',
-                            borderRadius:"50%"
-                        }}>
-                            <ArrowBackIos style={{ fontSize: "1.5rem", width: "1em", height: "1em", marginLeft:"10px"}} />
-                        </Link>
-
-                        <Avatar src={otherMember?.avatar}>
-                            <GroupIcon/>
-                        </Avatar>
-                        <Stack>
-                            <Typography>{otherMember ? otherMember?.name : chatDetails?.data?.chat?.name }</Typography>
-
-                        </Stack>
-
-                        {
-                            isOnline && (
-                                <Box
-                                    sx={{
-                                        width: "10px",
-                                        height: "10px",
-                                        borderRadius: "50%",
-                                        backgroundColor: "green",
-                                        position: "absolute",
-                                        top: "25%",
-                                        left: "6.2rem",
-                                        transform: "translateY(-50%)",
-                                    }}
 
 
-                                />
-                            )
-                        }
-                    </Stack>
-                }
-
-                {/* {
-                    otherMember === null &&
-                    <Stack
-                        direction={"row"}
-                        style={{
-                            display: "flex",
-                            gap: "1rem",
-                            alignItems: "center",
-                            padding: "1rem",
-                            backgroundColor: caribbeangreen[700],
-                            color: richblack[5],
-                            position: "relative"
-                        }}
-                    >
-                        <Link to={"/"}>
-                            <ArrowBackIos />
-                        </Link>
-
-                        <Avatar>
-                            <GroupIcon />
-                        </Avatar>
-                        <Stack>
-                            <Typography>{chatDetails?.data?.chat?.name}</Typography>
-
-                        </Stack>
-                    </Stack>
-                } */}
 
                 {
                     allMessages.map((i) => (
@@ -282,7 +259,8 @@ const Chat = ({ chatId, user, onlineUsers }) => {
 
             <form
                 style={{
-                    height: "10%"
+                    height: "10%",
+
                 }}
                 onSubmit={submitHandler}
             >
@@ -306,6 +284,9 @@ const Chat = ({ chatId, user, onlineUsers }) => {
                     <InputBox placeholder="Tpye Message Here..."
                         value={message}
                         onChange={messageOnChange}
+                        style={{
+                            height: "35px"
+                        }}
                     />
 
                     <IconButton

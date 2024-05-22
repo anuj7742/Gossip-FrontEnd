@@ -1,6 +1,6 @@
 import { AppBar, Backdrop, Badge, Box, Button, Dialog, IconButton, Stack, SwipeableDrawer, Toolbar, Tooltip, Typography } from "@mui/material";
 import axios from "axios";
-import React, { Suspense, lazy, useState } from "react";
+import React, { Suspense, lazy, useEffect, useState } from "react";
 import { server } from "../../constants/config";
 
 import {
@@ -88,9 +88,29 @@ const Header = () => {
         dispatch(resetNotificationCount())
     }
 
-    const shouldRenderHeader = !location.pathname.includes("/chat/");
+    const [screenSize, setScreenSize] = useState({
+        width: window.innerWidth,
+        height: window.innerHeight
+      });
+    
+      const updateScreenSize = () => {
+        setScreenSize({
+          width: window.innerWidth,
+          height: window.innerHeight
+        });
+      };
 
-    return (
+      useEffect(() => {
+        window.addEventListener('resize', updateScreenSize);
+    
+        return () => {
+          window.removeEventListener('resize', updateScreenSize);
+        };
+      }, []);
+
+    const shouldNotRenderHeader = location.pathname.includes("/chat/") && screenSize.width < 600 ;
+
+    return shouldNotRenderHeader ?  null : (
         <>
             <Box sx={{ flexGrow: 1 }} height={"4rem"}>
                 <AppBar position="static" sx={{

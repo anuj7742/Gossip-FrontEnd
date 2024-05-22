@@ -18,7 +18,8 @@ const initialState = {
         chatId: "",
         count : 0,
     },
-   ]
+   ],
+   
 };
 
 const chatSlice = createSlice({
