@@ -177,7 +177,7 @@ const Chat = ({ chatId, user, onlineUsers }) => {
 
             <Stack
                 direction={"row"}
-                style={{
+                sx={{
                     display: "flex",
                     gap: "1rem",
                     alignItems: "center",
@@ -241,8 +241,7 @@ const Chat = ({ chatId, user, onlineUsers }) => {
                     overflowY: "auto",
                 }}
             >
-
-
+               
 
                 {
                     allMessages.map((i) => (
